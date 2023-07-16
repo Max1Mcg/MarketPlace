@@ -7,24 +7,28 @@ namespace MarketPlace.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        MarketPlaceContext test = new MarketPlaceContext();
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+
+        MarketPlaceContext test;
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,
+            IConfiguration config)
         {
             _logger = logger;
+            test = new MarketPlaceContext(config);
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet("GetWeatherForecast")]
         public IActionResult Get()
         {
             return Ok(test.Orders.FirstOrDefault());
+        }
 
+        [HttpGet("Test")]
+        public IActionResult Test()
+        {
+            return Ok(test.Orders.FirstOrDefault());
         }
     }
 }
