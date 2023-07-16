@@ -4,6 +4,8 @@ using MarketPlace.Services;
 using MarketPlace.Services.Interfaces;
 using MarketPlace.Contexts;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using MarketPlace.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ builder.Services.AddDbContext<MarketPlaceContext>(o => o.UseNpgsql(builder.Confi
 builder.Services.AddScoped<IUserService, UserService>();
 //mb transient better
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapperConfig>());
 
 var app = builder.Build();
 
