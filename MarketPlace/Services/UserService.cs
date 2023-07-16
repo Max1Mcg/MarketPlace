@@ -2,28 +2,24 @@
 using MarketPlace.Repositories.Interfaces;
 using MarketPlace.Services.Interfaces;
 using MarketPlace.Models;
+using AutoMapper;
 
 namespace MarketPlace.Services
 {
     public class UserService:IUserService
     {
         IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        IMapper _mapper;
+        public UserService(IUserRepository userRepository,
+            IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
         public async Task<Guid> Registration(UserDTO userDTO)
         {
-            //Test run, replace with automapper
-            var user = new User {
-            Iduser = Guid.NewGuid(),
-            Name= userDTO.Name,
-            Surname= userDTO.Surname,
-            Patronymic= userDTO.Patronymic,
-            Age= userDTO.Age,
-            Login= userDTO.Login,
-            Password= userDTO.Password
-            };
+            var user = _mapper.Map<User>(userDTO);
+            user.Iduser = Guid.NewGuid();
             await _userRepository.CreateUser(user);
             return user.Iduser;
         }
