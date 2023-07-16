@@ -8,14 +8,12 @@ namespace MarketPlace.Contexts;
 public partial class MarketPlaceContext : DbContext
 {
     IConfiguration _configuration;
-    public MarketPlaceContext(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
 
-    public MarketPlaceContext(DbContextOptions<MarketPlaceContext> options)
+    public MarketPlaceContext(DbContextOptions<MarketPlaceContext> options,
+        IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
 
     public virtual DbSet<Basket> Baskets { get; set; }
