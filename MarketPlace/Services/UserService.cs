@@ -26,6 +26,7 @@ namespace MarketPlace.Services
         public UserDTO GetUser(Guid id)
         {
             var user = _userRepository.GetUser(id);
+            //replace with userdto
             return new UserDTO
             {
                 Age= user.Age,
