@@ -8,6 +8,12 @@ namespace MarketPlace.AutoMapper
     {
         public AutoMapperConfig() {
             CreateMap<UserDTO, User>();
+            CreateMap<CategoryDTO, Category>();
+            CreateMap<ItemDTO, Item>();
+            CreateMap<BasketDTO, Basket>();
+            CreateMap<DeliveryDTO, Delivery>();
+            CreateMap<OrderDTO, Order>();
+            CreateMap<StatusDTO, Status>();
         }
     }
 }
