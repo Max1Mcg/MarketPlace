@@ -27,8 +27,8 @@ namespace MarketPlace.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost("/user")]
-        public ActionResult User(Guid id)
+        [HttpGet("/user")]
+        public ActionResult<UserDTO> User(Guid id)
         {
             try
             {
