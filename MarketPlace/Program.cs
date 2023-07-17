@@ -17,11 +17,26 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<MarketPlaceContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionStrings:MarketPlace")));
+//Services
+builder.Services.AddScoped<IBasketService, BasketService>();
+builder.Services.AddScoped<IDeliveryService, DeliveryService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<IUserService, UserService>();
-//mb transient better
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapperConfig>());
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IItemService, ItemService>();
 
+//Repositories
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddScoped<IDeliveryRepository, DeliveryRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapperConfig>());
+//solution for problem with datetime(timestamp) type    
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
