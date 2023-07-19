@@ -6,5 +6,6 @@ namespace MarketPlace.Repositories.Interfaces
     {
         public Task CreateStatus(Status status);
         public IEnumerable<Status> GetStatuses();
+        public Status GetStatus(int id);
     }
 }

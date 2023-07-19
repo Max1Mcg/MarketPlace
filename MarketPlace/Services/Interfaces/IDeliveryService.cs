@@ -5,7 +5,7 @@ namespace MarketPlace.Services.Interfaces
 {
     public interface IDeliveryService
     {
-        public IEnumerable<Delivery> GetDeliveries();
+        public IEnumerable<DeliveryDTO> GetDeliveries();
         public Task<int> CreateDelivery(DeliveryDTO deliveryDTO);
     }
 }

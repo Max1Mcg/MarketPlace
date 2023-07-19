@@ -6,5 +6,6 @@ namespace MarketPlace.Repositories.Interfaces
     {
         public Task CreateDelivery(Delivery delivery);
         public IEnumerable<Delivery> GetDeliveries();
+        public Delivery GetDelivery(int id);
     }
 }

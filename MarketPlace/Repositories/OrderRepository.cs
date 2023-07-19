@@ -1,12 +1,13 @@
 ﻿using MarketPlace.Contexts;
 using MarketPlace.Models;
 using MarketPlace.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlace.Repositories
 {
     public class OrderRepository:IOrderRepository
     {
-        MarketPlaceContext _context;
+        private readonly MarketPlaceContext _context;
         public OrderRepository(MarketPlaceContext context)
         {
             _context = context;
@@ -18,7 +19,12 @@ namespace MarketPlace.Repositories
         }
         public Order GetOrder(Guid id)
         {
-            return _context.Orders.FirstOrDefault(o => o.Idorder == id);
+            return _context.Orders
+                .Where(o => o.Idorder == id)
+                .Include(o => o.Status)
+                .Include(o => o.Basket)
+                .Include(o => o.Delivery)
+                .SingleOrDefault(o => o.Idorder == id);
         }
     }
 }

@@ -12,13 +12,13 @@ namespace MarketPlace.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        ICategoryService _categoryService;
+        private readonly ICategoryService _categoryService;
         public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }
         [HttpGet("/categories")]
-        public IEnumerable<Category> Categories()
+        public IEnumerable<CategoryDTO> Categories()
         {
             return _categoryService.GetCategories();
         }
@@ -26,6 +26,12 @@ namespace MarketPlace.Controllers
         public async Task<int> Create([FromBody]CategoryDTO categoryDTO)
         {
             return await _categoryService.CreateCategory(categoryDTO);
+        }
+        //test
+        [HttpPatch]
+        public async Task<ActionResult> UpdateCategory(CategoryDTO categoryDTO)
+        {
+            return Ok();
         }
     }
 }

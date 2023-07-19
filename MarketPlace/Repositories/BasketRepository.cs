@@ -1,11 +1,13 @@
 ﻿using MarketPlace.Contexts;
 using MarketPlace.Models;
 using MarketPlace.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 namespace MarketPlace.Repositories
 {
     public class BasketRepository:IBasketRepository
     {
-        MarketPlaceContext _context;
+        private readonly MarketPlaceContext _context;
         public BasketRepository(MarketPlaceContext context)
         {
             _context = context;
@@ -17,7 +19,11 @@ namespace MarketPlace.Repositories
         }
         public Basket GetBasket(Guid id)
         {
-            return _context.Baskets.FirstOrDefault(b => b.Idbasket == id);
+            return _context.Baskets
+                .Where(b => b.Idbasket == id)
+                .Include(b => b.Items)
+                .Include(b => b.User)
+                .SingleOrDefault();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace MarketPlace.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
-        IItemService _itemService;
+        private readonly IItemService _itemService;
         public ItemController(IItemService itemService)
         {
             _itemService = itemService;
@@ -23,7 +23,7 @@ namespace MarketPlace.Controllers
             return await _itemService.CreateItem(itemDTO);
         }
         [HttpGet("/Item")]
-        public ActionResult<Item> Item(Guid id)
+        public ActionResult<ItemDTO> Item(Guid id)
         {
             return Ok(_itemService.GetItem(id));
         }

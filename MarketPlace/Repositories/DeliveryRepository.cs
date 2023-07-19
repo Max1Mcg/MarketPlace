@@ -6,7 +6,7 @@ namespace MarketPlace.Repositories
 {
     public class DeliveryRepository : IDeliveryRepository
     {
-        MarketPlaceContext _context;
+        private readonly MarketPlaceContext _context;
         public DeliveryRepository(MarketPlaceContext context)
         {
             _context = context;
@@ -19,6 +19,10 @@ namespace MarketPlace.Repositories
         public IEnumerable<Delivery> GetDeliveries()
         {
             return _context.Deliveries;
+        }
+        public Delivery GetDelivery(int id)
+        {
+            return _context.Deliveries.FirstOrDefault(d => d.Iddelivery == id);
         }
     }
 }

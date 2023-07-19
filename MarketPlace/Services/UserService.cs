@@ -1,15 +1,15 @@
 ﻿using MarketPlace.Models.DTOs;
 using MarketPlace.Repositories.Interfaces;
-using MarketPlace.Services.Interfaces;
 using MarketPlace.Models;
 using AutoMapper;
+using MarketPlace.Services.Interfaces;
 
 namespace MarketPlace.Services
 {
     public class UserService:IUserService
     {
-        IUserRepository _userRepository;
-        IMapper _mapper;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
         public UserService(IUserRepository userRepository,
             IMapper mapper)
         {
@@ -26,16 +26,7 @@ namespace MarketPlace.Services
         public UserDTO GetUser(Guid id)
         {
             var user = _userRepository.GetUser(id);
-            //replace with userdto
-            return new UserDTO
-            {
-                Age= user.Age,
-                Login= user.Login,
-                Password= user.Password,
-                Name= user.Name,
-                Surname= user.Surname,
-                Patronymic= user.Patronymic
-            };
+            return _mapper.Map<UserDTO>(user);
         }
     }
 }

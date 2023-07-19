@@ -9,17 +9,17 @@ namespace MarketPlace.Services
 {
     public class DeliveryService:IDeliveryService
     {
-        IDeliveryRepository _deliveryRepository;
-        IMapper _mapper;
+        private readonly IDeliveryRepository _deliveryRepository;
+        private readonly IMapper _mapper;
         public DeliveryService(IDeliveryRepository deliveryRepository,
         IMapper mapper)
         {
             _mapper = mapper;
             _deliveryRepository = deliveryRepository;
         }
-        public IEnumerable<Delivery> GetDeliveries()
+        public IEnumerable<DeliveryDTO> GetDeliveries()
         {
-            return _deliveryRepository.GetDeliveries();
+            return _deliveryRepository.GetDeliveries().Select(d => _mapper.Map<DeliveryDTO>(d));
         }
         public async Task<int> CreateDelivery(DeliveryDTO deliveryDTO)
         {

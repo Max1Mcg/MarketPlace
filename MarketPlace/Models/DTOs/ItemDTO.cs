@@ -6,6 +6,6 @@
         public string? Description { get; set; }
         public string? Weight { get; set; }
         public bool? Sold { get; set; }
-        //public ICollection<Category> Categories { get; set; } = new List<Category>();
+        public virtual ICollection<int> Categories { get; set; } = new List<int>();
     }
 }

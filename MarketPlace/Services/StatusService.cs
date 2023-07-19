@@ -9,17 +9,17 @@ namespace MarketPlace.Services
 {
     public class StatusService:IStatusService
     {
-        IStatusRepository _statusRepository;
-        IMapper _mapper;
+        private readonly IStatusRepository _statusRepository;
+        private readonly IMapper _mapper;
         public StatusService(IStatusRepository statusRepository,
         IMapper mapper)
         {
             _statusRepository= statusRepository;
             _mapper= mapper;
         }
-        public IEnumerable<Status> GetStatuses()
+        public IEnumerable<StatusDTO> GetStatuses()
         {
-            return _statusRepository.GetStatuses();
+            return _statusRepository.GetStatuses().Select(s => _mapper.Map<StatusDTO>(s));
         }
         public async Task<int> CreateStatus(StatusDTO statusDTO)
         {

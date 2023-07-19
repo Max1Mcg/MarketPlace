@@ -5,7 +5,7 @@ namespace MarketPlace.Services.Interfaces
 {
     public interface IStatusService
     {
-        public IEnumerable<Status> GetStatuses();
+        public IEnumerable<StatusDTO> GetStatuses();
         public Task<int> CreateStatus(StatusDTO statusDTO);
     }
 }

@@ -11,14 +11,17 @@ namespace MarketPlace.Controllers
     [ApiController]
     public class BasketController : ControllerBase
     {
-        IBasketService _basketService;
-        public BasketController(IBasketService basketService)
+        private readonly IBasketService _basketService;
+        private readonly ILogger<BasketController> _logger;
+        public BasketController(IBasketService basketService,
+            ILogger<BasketController> logger)
         {
             _basketService = basketService;
+            _logger = logger;
         }
         // GET api/<BasketController>/5
         [HttpGet("/basket")]
-        public Basket Get(Guid id)
+        public BasketDTO Get(Guid id)
         {
             return _basketService.GetBasket(id);
         }
@@ -29,5 +32,7 @@ namespace MarketPlace.Controllers
         {
             return await _basketService.CreateBasket(basket);
         }
+
+
     }
 }

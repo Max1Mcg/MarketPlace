@@ -1,12 +1,13 @@
 ﻿using MarketPlace.Contexts;
 using MarketPlace.Models;
 using MarketPlace.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlace.Repositories
 {
     public class ItemRepository:IItemRepository
     {
-        MarketPlaceContext _context;
+        private readonly MarketPlaceContext _context;
         public ItemRepository(MarketPlaceContext context)
         {
             _context = context;
@@ -18,7 +19,10 @@ namespace MarketPlace.Repositories
         }
         public Item GetItem(Guid id)
         {
-            return _context.Items.FirstOrDefault(i => i.Iditem == id);
+            return _context.Items
+                .Where(i => i.Iditem == id)
+                .Include(i => i.Categories)
+                .SingleOrDefault();
         }
     }
 }

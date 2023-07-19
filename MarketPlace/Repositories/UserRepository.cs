@@ -6,7 +6,7 @@ namespace MarketPlace.Repositories
 {
     public class UserRepository: IUserRepository
     {
-        MarketPlaceContext _context;
+        private readonly MarketPlaceContext _context;
         public UserRepository(MarketPlaceContext context) {
             _context = context;
         }

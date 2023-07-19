@@ -6,7 +6,7 @@ namespace MarketPlace.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        MarketPlaceContext _context;
+        private readonly MarketPlaceContext _context;
         public CategoryRepository(MarketPlaceContext context)
         {
             _context = context;
@@ -19,6 +19,10 @@ namespace MarketPlace.Repositories
         public IEnumerable<Category> GetCategories()
         {
             return _context.Categories;
+        }
+        public Category GetCategory(int id)
+        {
+            return _context.Categories.FirstOrDefault(c => c.Idcategory == id);
         }
     }
 }

@@ -7,5 +7,7 @@ namespace MarketPlace.Repositories.Interfaces
     {
         public Task CreateCategory(Category category);
         public IEnumerable<Category> GetCategories();
+        public Category GetCategory(int id);
+        
     }
 }

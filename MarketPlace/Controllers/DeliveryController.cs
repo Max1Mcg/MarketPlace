@@ -11,14 +11,14 @@ namespace MarketPlace.Controllers
     [ApiController]
     public class DeliveryController : ControllerBase
     {
-        IDeliveryService _deliveryService;
+        private readonly IDeliveryService _deliveryService;
         public DeliveryController(IDeliveryService deliveryService)
         {
             _deliveryService = deliveryService;
         }
         // GET: api/<DeliveryController>
         [HttpGet("/deliveries")]
-        public IEnumerable<Delivery> Get()
+        public IEnumerable<DeliveryDTO> Get()
         {
             return _deliveryService.GetDeliveries();   
         }

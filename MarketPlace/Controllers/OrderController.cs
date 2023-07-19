@@ -11,14 +11,14 @@ namespace MarketPlace.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        IOrderService _orderService;
+        private readonly IOrderService _orderService;
         public OrderController(IOrderService orderService)
         {
             _orderService= orderService;
         }
         // GET: api/<OrderController>
         [HttpGet("order")]
-        public Order Get(Guid id)
+        public OrderDTO Get(Guid id)
         {
             return _orderService.GetOrder(id);
         }

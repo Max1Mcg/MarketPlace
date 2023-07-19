@@ -5,7 +5,7 @@ namespace MarketPlace.Repositories
 {
     public class StatusRepository:IStatusRepository
     {
-        MarketPlaceContext _context;
+        private readonly MarketPlaceContext _context;
         public StatusRepository(MarketPlaceContext context)
         {
             _context = context;
@@ -18,6 +18,10 @@ namespace MarketPlace.Repositories
         public IEnumerable<Status> GetStatuses()
         {
             return _context.Statuses;
+        }
+        public Status GetStatus(int id)
+        {
+            return _context.Statuses.FirstOrDefault(s => s.Idstatus == id);
         }
     }
 }

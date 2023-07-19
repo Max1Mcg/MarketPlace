@@ -5,7 +5,7 @@ namespace MarketPlace.Services.Interfaces
 {
     public interface IItemService
     {
-        public Item GetItem(Guid id);
+        public ItemDTO GetItem(Guid id);
         public Task<Guid> CreateItem(ItemDTO itemDTO);
     }
 }

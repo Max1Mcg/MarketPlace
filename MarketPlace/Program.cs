@@ -15,7 +15,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+//Context
 builder.Services.AddDbContext<MarketPlaceContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionStrings:MarketPlace")));
 //Services
 builder.Services.AddScoped<IBasketService, BasketService>();
@@ -25,8 +25,7 @@ builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IItemService, ItemService>();
-
-//Repositories
+//Repositories(mb transient is better)
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IDeliveryRepository, DeliveryRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
@@ -34,6 +33,7 @@ builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//Mapping
 builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapperConfig>());
 //solution for problem with datetime(timestamp) type    
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);

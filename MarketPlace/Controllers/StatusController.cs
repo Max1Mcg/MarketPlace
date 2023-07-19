@@ -11,14 +11,14 @@ namespace MarketPlace.Controllers
     [ApiController]
     public class StatusController : ControllerBase
     {
-        IStatusService _statusService;
+        private readonly IStatusService _statusService;
         public StatusController(IStatusService statusService)
         {
             _statusService = statusService;
         }
         // GET: api/<StatusController>
         [HttpGet("/statuses")]
-        public IEnumerable<Status> Get()
+        public IEnumerable<StatusDTO> Get()
         {
             return _statusService.GetStatuses();
         }
