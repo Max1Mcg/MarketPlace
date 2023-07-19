@@ -26,8 +26,18 @@ namespace MarketPlace.Services
             var status = _mapper.Map<Status>(statusDTO);
             var indexToAdd = _statusRepository.GetStatuses().Count();
             status.Idstatus = indexToAdd;
-            await _statusRepository.CreateStatus(status);
+            await _statusRepository.Create(status);
             return indexToAdd;
+        }
+        public async Task UpdateStatus(int id, StatusDTO statusDTO)
+        {
+            var status = _mapper.Map<Status>(statusDTO);
+            status.Idstatus = id;
+            await _statusRepository.Update(status);
+        }
+        public async Task DeleteStatus(int id)
+        {
+            await _statusRepository.Delete(id);
         }
     }
 }

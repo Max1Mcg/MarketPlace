@@ -1,5 +1,6 @@
 ﻿using MarketPlace.Models.DTOs;
 using MarketPlace.Models;
+using AutoMapper.Configuration.Conventions;
 
 namespace MarketPlace.Services.Interfaces
 {
@@ -7,5 +8,7 @@ namespace MarketPlace.Services.Interfaces
     {
         public IEnumerable<StatusDTO> GetStatuses();
         public Task<int> CreateStatus(StatusDTO statusDTO);
+        public Task UpdateStatus(int id, StatusDTO statusDTO);
+        public Task DeleteStatus(int id);
     }
 }

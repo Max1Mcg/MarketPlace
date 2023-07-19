@@ -6,5 +6,7 @@ namespace MarketPlace.Services.Interfaces
     {
         public Task<Guid> Registration(UserDTO userDTO);
         public UserDTO GetUser(Guid id);
+        public Task UpdateUser(Guid id, UserDTO userDTO);
+        public Task DeleteUser(Guid id);
     }
 }

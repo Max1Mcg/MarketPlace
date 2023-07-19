@@ -7,7 +7,7 @@ using MarketPlace.Services.Interfaces;
 
 namespace MarketPlace.Services
 {
-    public class CategoryService:ICategoryService
+    public class CategoryService: ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
@@ -23,8 +23,18 @@ namespace MarketPlace.Services
             var indexToAdd = _categoryRepository.GetCategories().Count();
             var category = _mapper.Map<Category>(categoryDTO);
             category.Idcategory = indexToAdd;
-            await _categoryRepository.CreateCategory(category);
+            await _categoryRepository.Create(category);
             return indexToAdd;
+        }
+        public async Task UpdateCategory(int id, CategoryDTO categoryDTO)
+        {
+            var category = _mapper.Map<Category>(categoryDTO);
+            category.Idcategory = id;
+            await _categoryRepository.Update(category);
+        }
+        public async Task DeleteCategory(int id)
+        {
+            await _categoryRepository.Delete(id);
         }
     }
 }

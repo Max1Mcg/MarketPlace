@@ -36,10 +36,19 @@ namespace MarketPlace.Services
         {
             var basket = _mapper.Map<Basket>(basketDTO);
             basket.Items = basketDTO.ItemsIds.Select(i => _itemRepository.GetItem(i)).ToList();
-            //basket.User = _userRepository.GetUser(basketDTO.Userid);
             basket.Idbasket = Guid.NewGuid();
-            await _basketRepository.CreateBasket(basket);
+            await _basketRepository.Create(basket);
             return basket.Idbasket;
+        }
+        public async Task UpdateBasket(Guid id, BasketDTO basketDTO)
+        {
+            var basket = _mapper.Map<Basket>(basketDTO);
+            basket.Idbasket = id;
+            await _basketRepository.Update(basket);
+        }
+        public async Task DeleteBasket(Guid id)
+        {
+            await _basketRepository.Delete(id);
         }
     }
 }

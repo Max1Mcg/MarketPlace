@@ -1,21 +1,22 @@
 ﻿using MarketPlace.Contexts;
 using MarketPlace.Models;
+using MarketPlace.Repositories.Base;
 using MarketPlace.Repositories.Interfaces;
 
 namespace MarketPlace.Repositories
 {
-    public class DeliveryRepository : IDeliveryRepository
+    public class DeliveryRepository :BaseRepository<Delivery>, IDeliveryRepository
     {
-        private readonly MarketPlaceContext _context;
-        public DeliveryRepository(MarketPlaceContext context)
+        //private readonly MarketPlaceContext _context;
+        public DeliveryRepository(MarketPlaceContext context):base(context)
         {
-            _context = context;
+            //_context = context;
         }
-        public async Task CreateDelivery(Delivery delivery)
+        /*public async Task CreateDelivery(Delivery delivery)
         {
             _context.Deliveries.Add(delivery);
             await _context.SaveChangesAsync();
-        }
+        }*/
         public IEnumerable<Delivery> GetDeliveries()
         {
             return _context.Deliveries;

@@ -1,5 +1,6 @@
 ﻿using MarketPlace.Models;
 using MarketPlace.Models.DTOs;
+using MarketPlace.Services;
 using MarketPlace.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,18 @@ namespace MarketPlace.Controllers
         public async Task<int> Post([FromBody]StatusDTO statusDTO)
         {
             return await _statusService.CreateStatus(statusDTO);
+        }
+        [HttpPatch]
+        public async Task<ActionResult> UpdateStatus(int id, [FromBody] StatusDTO statusDTO)
+        {
+            await _statusService.UpdateStatus(id, statusDTO);
+            return Ok();
+        }
+        [HttpDelete]
+        public async Task<ActionResult> DeleteStatus(int id)
+        {
+            await _statusService.DeleteStatus(id);
+            return Ok();
         }
     }
 }

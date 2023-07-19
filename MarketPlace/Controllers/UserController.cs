@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MarketPlace.Models.DTOs;
 using MarketPlace.Services.Interfaces;
+using MarketPlace.Services;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MarketPlace.Controllers
@@ -38,6 +39,18 @@ namespace MarketPlace.Controllers
             {
                 return BadRequest();
             }
+        }
+        [HttpPatch]
+        public async Task<ActionResult> UpdateUser(Guid id, [FromBody] UserDTO orderDTO)
+        {
+            await _userService.UpdateUser(id, orderDTO);
+            return Ok();
+        }
+        [HttpDelete]
+        public async Task<ActionResult> DeleteUser(Guid id)
+        {
+            await _userService.DeleteUser(id);
+            return Ok();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MarketPlace.Models.DTOs;
 using MarketPlace.Models;
+using Npgsql.PostgresTypes;
 
 namespace MarketPlace.Services.Interfaces
 {
@@ -7,5 +8,7 @@ namespace MarketPlace.Services.Interfaces
     {
         public BasketDTO GetBasket(Guid id);
         public Task<Guid> CreateBasket(BasketDTO basketDTO);
+        public Task DeleteBasket(Guid id);
+        public Task UpdateBasket(Guid id, BasketDTO basketDTO);
     }
 }

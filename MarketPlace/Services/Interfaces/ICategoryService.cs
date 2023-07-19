@@ -7,5 +7,7 @@ namespace MarketPlace.Services.Interfaces
     {
         public IEnumerable<CategoryDTO> GetCategories();
         public Task<int> CreateCategory(CategoryDTO categoryDTO);
+        public Task UpdateCategory(int id, CategoryDTO categoryDTO);
+        public Task DeleteCategory(int id);
     }
 }

@@ -2,9 +2,8 @@
 
 namespace MarketPlace.Repositories.Interfaces
 {
-    public interface IOrderRepository
+    public interface IOrderRepository : IBaseRepository<Order>
     {
-        public Task CreateOrder(Order order);
         public Order GetOrder(Guid id);
     }
 }

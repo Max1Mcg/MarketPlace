@@ -3,9 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlace.Repositories.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository:IBaseRepository<Category>
     {
-        public Task CreateCategory(Category category);
         public IEnumerable<Category> GetCategories();
         public Category GetCategory(int id);
         

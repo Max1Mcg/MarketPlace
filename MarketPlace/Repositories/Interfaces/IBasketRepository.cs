@@ -2,9 +2,8 @@
 
 namespace MarketPlace.Repositories.Interfaces
 {
-    public interface IBasketRepository
+    public interface IBasketRepository : IBaseRepository<Basket>
     {
-        public Task CreateBasket(Basket basket);
         public Basket GetBasket(Guid id);
     }
 }

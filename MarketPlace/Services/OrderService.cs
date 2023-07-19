@@ -3,6 +3,7 @@ using MarketPlace.Models.DTOs;
 using MarketPlace.Models;
 using MarketPlace.Repositories.Interfaces;
 using MarketPlace.Services.Interfaces;
+using MarketPlace.Repositories;
 
 namespace MarketPlace.Services
 {
@@ -34,11 +35,18 @@ namespace MarketPlace.Services
         {
             var order = _mapper.Map<Order>(orderDTO);
             order.Idorder = Guid.NewGuid();
-            //order.Status = _statusRepository.GetStatus(orderDTO.Statusid);
-            //order.Delivery = _deliveryRepository.GetDelivery(orderDTO.Deliveryid);
-            //order.Basket = _basketRepository.GetBasket(orderDTO.Basketid);
-            await _orderRepository.CreateOrder(order);
+            await _orderRepository.Create(order);
             return order.Idorder;
+        }
+        public async Task UpdateOrder(Guid id, OrderDTO orderDTO)
+        {
+            var order = _mapper.Map<Order>(orderDTO);
+            order.Idorder = id;
+            await _orderRepository.Update(order);
+        }
+        public async Task DeleteOrder(Guid id)
+        {
+            await _orderRepository.Delete(id);
         }
     }
 }

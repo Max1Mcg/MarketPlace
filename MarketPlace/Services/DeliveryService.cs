@@ -26,8 +26,18 @@ namespace MarketPlace.Services
             var delivery = _mapper.Map<Delivery>(deliveryDTO);
             var indexToAdd = _deliveryRepository.GetDeliveries().Count();
             delivery.Iddelivery = indexToAdd;
-            await _deliveryRepository.CreateDelivery(delivery);
+            await _deliveryRepository.Create(delivery);
             return indexToAdd;
+        }
+        public async Task UpdateDelivery(int id, DeliveryDTO deliveryDTO)
+        {
+            var delivery = _mapper.Map<Delivery>(deliveryDTO);
+            delivery.Iddelivery = id;
+            await _deliveryRepository.Update(delivery);
+        }
+        public async Task DeleteDelivery(int id)
+        {
+            await _deliveryRepository.Delete(id);
         }
     }
 }

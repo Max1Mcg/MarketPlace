@@ -2,9 +2,8 @@
 
 namespace MarketPlace.Repositories.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IBaseRepository<User>
     {
-        public Task CreateUser(User user);
         public User GetUser(Guid id);
     }
 }

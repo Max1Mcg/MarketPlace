@@ -1,5 +1,6 @@
 ﻿using MarketPlace.Models;
 using MarketPlace.Models.DTOs;
+using MarketPlace.Services;
 using MarketPlace.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,18 @@ namespace MarketPlace.Controllers
         public async Task<Guid> Post([FromBody] OrderDTO orderDTO)
         {
             return await _orderService.CreateOrder(orderDTO);
+        }
+        [HttpPatch]
+        public async Task<ActionResult> UpdateOrder(Guid id, [FromBody] OrderDTO orderDTO)
+        {
+            await _orderService.UpdateOrder(id, orderDTO);
+            return Ok();
+        }
+        [HttpDelete]
+        public async Task<ActionResult> DeleteOrder(Guid id)
+        {
+            await _orderService.DeleteOrder(id);
+            return Ok();
         }
     }
 }

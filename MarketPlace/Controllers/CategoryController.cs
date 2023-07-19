@@ -4,8 +4,6 @@ using MarketPlace.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace MarketPlace.Controllers
 {
     [Route("api/[controller]")]
@@ -27,10 +25,16 @@ namespace MarketPlace.Controllers
         {
             return await _categoryService.CreateCategory(categoryDTO);
         }
-        //test
         [HttpPatch]
-        public async Task<ActionResult> UpdateCategory(CategoryDTO categoryDTO)
+        public async Task<ActionResult> UpdateCategory(int id, [FromBody]CategoryDTO categoryDTO)
         {
+            await _categoryService.UpdateCategory(id, categoryDTO);
+            return Ok();
+        }
+        [HttpDelete]
+        public async Task<ActionResult> DeleteCategory(int id)
+        {
+            await _categoryService.DeleteCategory(id);
             return Ok();
         }
     }

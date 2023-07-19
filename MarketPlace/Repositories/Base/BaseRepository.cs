@@ -1,13 +1,14 @@
 ﻿using MarketPlace.Contexts;
 using MarketPlace.Models;
+using MarketPlace.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlace.Repositories.Base
 {
-    public class BaseRepository<T> where T:class
+    public class BaseRepository<T> : IBaseRepository<T> where T:class
     {
-        private readonly MarketPlaceContext _context;
-        private readonly DbSet<T> _set;
+        protected readonly MarketPlaceContext _context;
+        protected readonly DbSet<T> _set;
         public BaseRepository(MarketPlaceContext context)
         {
             _context = context;

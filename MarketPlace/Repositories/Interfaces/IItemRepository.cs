@@ -2,9 +2,8 @@
 
 namespace MarketPlace.Repositories.Interfaces
 {
-    public interface IItemRepository
+    public interface IItemRepository : IBaseRepository<Item>
     {
-        public Task CreateItem(Item item);
         public Item GetItem(Guid id);
     }
 }

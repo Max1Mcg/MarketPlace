@@ -3,6 +3,7 @@ using MarketPlace.Models;
 using MarketPlace.Services.Interfaces;
 using MarketPlace.Repositories.Interfaces;
 using AutoMapper;
+using MarketPlace.Repositories;
 
 namespace MarketPlace.Services
 {
@@ -31,8 +32,18 @@ namespace MarketPlace.Services
             var item = _mapper.Map<Item>(itemDTO);
             item.Iditem = Guid.NewGuid();
             item.Categories = itemDTO.Categories.Select(c => _categoryRepository.GetCategory(c)).ToList();
-            await _itemRepository.CreateItem(item);
+            await _itemRepository.Create(item);
             return item.Iditem;
+        }
+        public async Task UpdateItem(Guid id, ItemDTO itemDTO)
+        {
+            var item = _mapper.Map<Item>(itemDTO);
+            item.Iditem = id;
+            await _itemRepository.Update(item);
+        }
+        public async Task DeleteItem(Guid id)
+        {
+            await _itemRepository.Delete(id);
         }
     }
 }
