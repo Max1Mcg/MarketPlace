@@ -25,6 +25,7 @@ builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<IReceiptService, ReceiptService>();
 //Repositories(mb transient is better)
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IDeliveryRepository, DeliveryRepository>();
@@ -33,6 +34,7 @@ builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IReceiptRepository, ReceiptRepository>();
 //Mapping
 builder.Services.AddAutoMapper(c => c.AddProfile<AutoMapperConfig>());
 //solution for problem with datetime(timestamp) type    
