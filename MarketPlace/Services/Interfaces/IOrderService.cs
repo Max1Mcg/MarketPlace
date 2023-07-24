@@ -9,5 +9,6 @@ namespace MarketPlace.Services.Interfaces
         public Task<Guid> CreateOrder(OrderDTO orderDTO);
         public Task UpdateOrder(Guid id, OrderDTO orderDTO);
         public Task DeleteOrder(Guid id);
+        public Task<string> CancelOrder(Guid id);
     }
 }

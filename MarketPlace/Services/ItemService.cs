@@ -4,6 +4,7 @@ using MarketPlace.Services.Interfaces;
 using MarketPlace.Repositories.Interfaces;
 using AutoMapper;
 using MarketPlace.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlace.Services
 {
@@ -23,6 +24,8 @@ namespace MarketPlace.Services
         public ItemDTO GetItem(Guid id)
         {
             var item = _itemRepository.GetItem(id);
+            if (item == null || item.Available == false)
+                throw new Exception("Товар не найден или не существует");
             var itemDTO = _mapper.Map<ItemDTO>(item);
             itemDTO.Categories = item.Categories.Select(c => c.Idcategory).ToList();
             return itemDTO;
@@ -32,6 +35,7 @@ namespace MarketPlace.Services
             var item = _mapper.Map<Item>(itemDTO);
             item.Iditem = Guid.NewGuid();
             item.Categories = itemDTO.Categories.Select(c => _categoryRepository.GetCategory(c)).ToList();
+            item.Available = true;
             await _itemRepository.Create(item);
             return item.Iditem;
         }
@@ -41,9 +45,17 @@ namespace MarketPlace.Services
             item.Iditem = id;
             await _itemRepository.Update(item);
         }
+        /// <summary>
+        /// Удаление представляет из себя недоступность товара, т.к. товар может быть уже добавлен в корзины и информации о нём оттуда просто так
+        /// пропадать не должна.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task DeleteItem(Guid id)
         {
-            await _itemRepository.Delete(id);
+            var item = _itemRepository.GetItem(id);
+            item.Available = false;
+            await _itemRepository.Update(item);
         }
     }
 }
