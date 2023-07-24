@@ -27,6 +27,7 @@ public partial class MarketPlaceContext : DbContext
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<Status> Statuses { get; set; }
+    public virtual DbSet<Receipt> Receipt { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
