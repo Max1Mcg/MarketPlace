@@ -2,6 +2,7 @@
 {
     public class ItemDTO
     {
+        public Guid Userid { get; set; }
         public double? Cost { get; set; }
         public string? Description { get; set; }
         public string? Weight { get; set; }
