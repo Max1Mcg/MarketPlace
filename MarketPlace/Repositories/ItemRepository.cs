@@ -18,5 +18,9 @@ namespace MarketPlace.Repositories
                 .Include(i => i.Categories)
                 .SingleOrDefault();
         }
+        public List<Item> GetItems(List<Guid>itemIds)
+        {
+            return itemIds.Select(id => GetItem(id)).ToList();
+        }
     }
 }

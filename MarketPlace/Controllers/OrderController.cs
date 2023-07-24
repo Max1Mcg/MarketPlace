@@ -20,24 +20,25 @@ namespace MarketPlace.Controllers
         {
             return _orderService.GetOrder(id);
         }
-
-        [HttpPost("create")]
+        //Заказ создаётся при оформлении корзины, в контроллере корзины
+        /*[HttpPost("create")]
         public async Task<Guid> Post([FromBody] OrderDTO orderDTO)
         {
             return await _orderService.CreateOrder(orderDTO);
-        }
+        }*/
         [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateOrder(Guid id, [FromBody] OrderDTO orderDTO)
         {
             await _orderService.UpdateOrder(id, orderDTO);
             return Ok();
         }
-        [HttpDelete("{id}")]
+        //По-сути это дублирование cancel заказа только без установки товарам статуса "доступен" и возвращения денег на счёт
+        /*[HttpDelete("{id}")]
         public async Task<ActionResult> DeleteOrder(Guid id)
         {
             await _orderService.DeleteOrder(id);
             return Ok();
-        }
+        }*/
         /// <summary>
         /// Отмена оформленного заказа
         /// </summary>

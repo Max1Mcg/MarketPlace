@@ -68,12 +68,25 @@ namespace MarketPlace.Controllers
         /// <param name="itemId">id предмета</param>
         /// <param name="id">id корзины</param>
         /// <returns></returns>
-        [HttpDelete("{id}/item/{itemId}")]
-        public async Task<ActionResult> DeleteItemFromBasket([FromBody]Guid itemId, Guid id)
+        [HttpDelete("{id}/item")]
+        public async Task<ActionResult> DeleteItemFromBasket([FromBody]List<Guid> itemsIds, Guid id)
         {
             try
             {
-                await _basketService.DeleteItemFromBasket(itemId, id);
+                await _basketService.DeleteItemsFromBasket(itemsIds, id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+        [HttpPatch("{id}/item")]
+        public async Task<ActionResult> AddItemToBasket([FromBody]List<Guid> itemsIds, Guid id)
+        {
+            try
+            {
+                await _basketService.AddItemsToBasket(itemsIds, id);
                 return Ok();
             }
             catch (Exception e)

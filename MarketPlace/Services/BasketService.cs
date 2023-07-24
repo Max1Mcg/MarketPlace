@@ -5,6 +5,7 @@ using MarketPlace.Repositories;
 using MarketPlace.Repositories.Interfaces;
 using MarketPlace.Services.Interfaces;
 using MarketPlace.Enums;
+using MarketPlace.Extensions;
 
 namespace MarketPlace.Services
 {
@@ -58,13 +59,22 @@ namespace MarketPlace.Services
         {
             await _basketRepository.Delete(id);
         }
-        public async Task DeleteItemFromBasket(Guid itemId, Guid id)
+        public async Task DeleteItemsFromBasket(List<Guid> itemsIds, Guid id)
         {
             var basket = _basketRepository.GetBasket(id);
-            var itemForDelete = _itemRepository.GetItem(itemId);
-            if (itemForDelete == null)
-                throw new Exception("Предмета с таким id нет в корзине");
-            basket.Items.Remove(itemForDelete);
+            var itemsForDelete = _itemRepository.GetItems(itemsIds);
+            if (itemsForDelete == null)
+                throw new Exception("Предметов с таким id нет в корзине");
+            basket.Items.RemoveRange(itemsForDelete);
+            await _basketRepository.Update(basket);
+        }
+        public async Task AddItemsToBasket(List<Guid> itemsIds, Guid id)
+        {
+            var basket = _basketRepository.GetBasket(id);
+            var itemsForAdd = _itemRepository.GetItems(itemsIds);
+            if (itemsForAdd == null)
+                throw new Exception("Предметов с таким id не найдено");
+            basket.Items.AddRange(itemsForAdd);
             await _basketRepository.Update(basket);
         }
         public async Task<Guid> BasketToOrder(Guid userId, int deliveryId, Guid basketId)
