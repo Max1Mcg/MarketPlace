@@ -29,10 +29,5 @@ namespace MarketPlace.Repositories.Base
             _set.Remove(await _set.FindAsync(id));
             await _context.SaveChangesAsync();
         }
-        //Над этим подумать, т.к. у разных моделей разные связанные сущности
-        /*public async Task<T> GetById(object id)
-        {
-
-        }*/
     }
 }

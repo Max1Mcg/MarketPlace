@@ -7,16 +7,9 @@ namespace MarketPlace.Repositories
 {
     public class DeliveryRepository :BaseRepository<Delivery>, IDeliveryRepository
     {
-        //private readonly MarketPlaceContext _context;
         public DeliveryRepository(MarketPlaceContext context):base(context)
         {
-            //_context = context;
         }
-        /*public async Task CreateDelivery(Delivery delivery)
-        {
-            _context.Deliveries.Add(delivery);
-            await _context.SaveChangesAsync();
-        }*/
         public IEnumerable<Delivery> GetDeliveries()
         {
             return _context.Deliveries;

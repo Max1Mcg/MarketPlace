@@ -8,23 +8,18 @@ namespace MarketPlace.Repositories
 {
     public class OrderRepository:BaseRepository<Order>, IOrderRepository
     {
-        //private readonly MarketPlaceContext _context;
         public OrderRepository(MarketPlaceContext context):base(context)
         {
-            //_context = context;
         }
-        /*public async Task CreateOrder(Order order)
-        {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-        }*/
         public Order GetOrder(Guid id)
         {
             return _context.Orders
                 .Where(o => o.Idorder == id)
                 .Include(o => o.Status)
                 .Include(o => o.Basket)
+                    .ThenInclude(b => b.User)
                 .Include(o => o.Delivery)
+                .Include(o => o.receipt)
                 .SingleOrDefault(o => o.Idorder == id);
         }
     }
