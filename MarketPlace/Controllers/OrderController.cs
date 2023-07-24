@@ -4,8 +4,6 @@ using MarketPlace.Services;
 using MarketPlace.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace MarketPlace.Controllers
 {
     [Route("api/[controller]")]
@@ -17,14 +15,12 @@ namespace MarketPlace.Controllers
         {
             _orderService= orderService;
         }
-        // GET: api/<OrderController>
         [HttpGet("order")]
         public OrderDTO Get(Guid id)
         {
             return _orderService.GetOrder(id);
         }
 
-        // POST api/<OrderController>
         [HttpPost("/order/create")]
         public async Task<Guid> Post([FromBody] OrderDTO orderDTO)
         {
@@ -41,6 +37,16 @@ namespace MarketPlace.Controllers
         {
             await _orderService.DeleteOrder(id);
             return Ok();
+        }
+        /// <summary>
+        /// Отмена оформленного заказа
+        /// </summary>
+        /// <param name="id">id заказа</param>
+        /// <returns>Строка, имулирующая необходимость вернуть средства пользователю или её отсутствие</returns>
+        [HttpPatch("order/cancel")]
+        public async Task<ActionResult<string>> CancelOrder(Guid id)
+        {
+            return Ok(await _orderService.CancelOrder(id));
         }
     }
 }

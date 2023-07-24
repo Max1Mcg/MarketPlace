@@ -2,7 +2,6 @@
 using MarketPlace.Models.DTOs;
 using MarketPlace.Services.Interfaces;
 using MarketPlace.Services;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MarketPlace.Controllers
 {
@@ -15,7 +14,6 @@ namespace MarketPlace.Controllers
         {
             _userService = userService;
         }
-        // GET: api/<ValuesController>
         [HttpPost("/registration")]
         public async Task<IActionResult> Registration([FromBody]UserDTO userDTO)
         {

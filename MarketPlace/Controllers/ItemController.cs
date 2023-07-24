@@ -2,9 +2,8 @@
 using MarketPlace.Models.DTOs;
 using MarketPlace.Services;
 using MarketPlace.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MarketPlace.Controllers
 {
@@ -17,7 +16,6 @@ namespace MarketPlace.Controllers
         {
             _itemService = itemService;
         }
-        //if way == /create, swagger generate some error(not unique path)
         [HttpPost("/create_")]
         public async Task<Guid> Create([FromBody] ItemDTO itemDTO)
         {
@@ -26,7 +24,14 @@ namespace MarketPlace.Controllers
         [HttpGet("/Item")]
         public ActionResult<ItemDTO> Item(Guid id)
         {
-            return Ok(_itemService.GetItem(id));
+            try
+            {
+                return Ok(_itemService.GetItem(id));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
         [HttpPatch]
         public async Task<ActionResult> UpdateItem(Guid id, [FromBody] ItemDTO itemDTO)

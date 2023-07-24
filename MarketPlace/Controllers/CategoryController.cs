@@ -15,22 +15,42 @@ namespace MarketPlace.Controllers
         {
             _categoryService = categoryService;
         }
+        /// <summary>
+        /// Получение всех категорий
+        /// </summary>
+        /// <returns>коллекция категорий</returns>
         [HttpGet("/categories")]
         public IEnumerable<CategoryDTO> Categories()
         {
             return _categoryService.GetCategories();
         }
+        /// <summary>
+        /// Создание категории
+        /// </summary>
+        /// <param name="categoryDTO">Информация для создания категории</param>
+        /// <returns>id категории</returns>
         [HttpPost("/create")]
         public async Task<int> Create([FromBody]CategoryDTO categoryDTO)
         {
             return await _categoryService.CreateCategory(categoryDTO);
         }
+        /// <summary>
+        /// Изменение категории
+        /// </summary>
+        /// <param name="id">id категории</param>
+        /// <param name="categoryDTO">Новая информация по категории</param>
+        /// <returns></returns>
         [HttpPatch]
         public async Task<ActionResult> UpdateCategory(int id, [FromBody]CategoryDTO categoryDTO)
         {
             await _categoryService.UpdateCategory(id, categoryDTO);
             return Ok();
         }
+        /// <summary>
+        /// Удаление категории
+        /// </summary>
+        /// <param name="id">id категории</param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<ActionResult> DeleteCategory(int id)
         {
