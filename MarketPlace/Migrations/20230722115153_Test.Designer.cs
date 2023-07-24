@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlace.Migrations
 {
     [DbContext(typeof(MarketPlaceContext))]
-    [Migration("20230716084924_Initial")]
-    partial class Initial
+    [Migration("20230722115153_Test")]
+    partial class Test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,6 +130,9 @@ namespace MarketPlace.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("iditem");
 
+                    b.Property<bool?>("Available")
+                        .HasColumnType("boolean");
+
                     b.Property<double?>("Cost")
                         .HasColumnType("double precision")
                         .HasColumnName("cost");
@@ -180,6 +183,9 @@ namespace MarketPlace.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("formed_at");
 
+                    b.Property<Guid?>("Receiptid")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("Statusid")
                         .HasColumnType("integer")
                         .HasColumnName("statusid");
@@ -191,9 +197,28 @@ namespace MarketPlace.Migrations
 
                     b.HasIndex("Deliveryid");
 
+                    b.HasIndex("Receiptid");
+
                     b.HasIndex("Statusid");
 
                     b.ToTable("Order", (string)null);
+                });
+
+            modelBuilder.Entity("MarketPlace.Models.Receipt", b =>
+                {
+                    b.Property<Guid>("Idreceipt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<double?>("Cost")
+                        .HasColumnType("double precision");
+
+                    b.Property<bool>("hasPayment")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Idreceipt");
+
+                    b.ToTable("Receipt");
                 });
 
             modelBuilder.Entity("MarketPlace.Models.Status", b =>
@@ -237,6 +262,9 @@ namespace MarketPlace.Migrations
                     b.Property<string>("Patronymic")
                         .HasColumnType("text")
                         .HasColumnName("patronymic");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
 
                     b.Property<string>("Surname")
                         .HasColumnType("text")
@@ -303,6 +331,10 @@ namespace MarketPlace.Migrations
                         .IsRequired()
                         .HasConstraintName("Order_deliveryid_fkey");
 
+                    b.HasOne("MarketPlace.Models.Receipt", "receipt")
+                        .WithMany("Orders")
+                        .HasForeignKey("Receiptid");
+
                     b.HasOne("MarketPlace.Models.Status", "Status")
                         .WithMany("Orders")
                         .HasForeignKey("Statusid")
@@ -314,6 +346,8 @@ namespace MarketPlace.Migrations
                     b.Navigation("Delivery");
 
                     b.Navigation("Status");
+
+                    b.Navigation("receipt");
                 });
 
             modelBuilder.Entity("MarketPlace.Models.Basket", b =>
@@ -322,6 +356,11 @@ namespace MarketPlace.Migrations
                 });
 
             modelBuilder.Entity("MarketPlace.Models.Delivery", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("MarketPlace.Models.Receipt", b =>
                 {
                     b.Navigation("Orders");
                 });

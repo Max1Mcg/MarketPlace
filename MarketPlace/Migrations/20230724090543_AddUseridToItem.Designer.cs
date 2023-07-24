@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlace.Migrations
 {
     [DbContext(typeof(MarketPlaceContext))]
-    [Migration("20230716085423_AddRoleForUser")]
-    partial class AddRoleForUser
+    [Migration("20230724090543_AddUseridToItem")]
+    partial class AddUseridToItem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,6 +130,9 @@ namespace MarketPlace.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("iditem");
 
+                    b.Property<bool?>("Available")
+                        .HasColumnType("boolean");
+
                     b.Property<double?>("Cost")
                         .HasColumnType("double precision")
                         .HasColumnName("cost");
@@ -144,12 +147,17 @@ namespace MarketPlace.Migrations
                         .HasColumnName("sold")
                         .HasDefaultValueSql("false");
 
+                    b.Property<Guid>("Userid")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Weight")
                         .HasColumnType("text")
                         .HasColumnName("weight");
 
                     b.HasKey("Iditem")
                         .HasName("Item_pkey");
+
+                    b.HasIndex("Userid");
 
                     b.ToTable("Item", (string)null);
                 });
@@ -180,6 +188,9 @@ namespace MarketPlace.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("formed_at");
 
+                    b.Property<Guid?>("Receiptid")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("Statusid")
                         .HasColumnType("integer")
                         .HasColumnName("statusid");
@@ -191,9 +202,28 @@ namespace MarketPlace.Migrations
 
                     b.HasIndex("Deliveryid");
 
+                    b.HasIndex("Receiptid");
+
                     b.HasIndex("Statusid");
 
                     b.ToTable("Order", (string)null);
+                });
+
+            modelBuilder.Entity("MarketPlace.Models.Receipt", b =>
+                {
+                    b.Property<Guid>("Idreceipt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<double?>("Cost")
+                        .HasColumnType("double precision");
+
+                    b.Property<bool>("hasPayment")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Idreceipt");
+
+                    b.ToTable("Receipt");
                 });
 
             modelBuilder.Entity("MarketPlace.Models.Status", b =>
@@ -292,6 +322,15 @@ namespace MarketPlace.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MarketPlace.Models.Item", b =>
+                {
+                    b.HasOne("MarketPlace.Models.User", null)
+                        .WithMany("Items")
+                        .HasForeignKey("Userid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MarketPlace.Models.Order", b =>
                 {
                     b.HasOne("MarketPlace.Models.Basket", "Basket")
@@ -306,6 +345,10 @@ namespace MarketPlace.Migrations
                         .IsRequired()
                         .HasConstraintName("Order_deliveryid_fkey");
 
+                    b.HasOne("MarketPlace.Models.Receipt", "receipt")
+                        .WithMany("Orders")
+                        .HasForeignKey("Receiptid");
+
                     b.HasOne("MarketPlace.Models.Status", "Status")
                         .WithMany("Orders")
                         .HasForeignKey("Statusid")
@@ -317,6 +360,8 @@ namespace MarketPlace.Migrations
                     b.Navigation("Delivery");
 
                     b.Navigation("Status");
+
+                    b.Navigation("receipt");
                 });
 
             modelBuilder.Entity("MarketPlace.Models.Basket", b =>
@@ -329,6 +374,11 @@ namespace MarketPlace.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("MarketPlace.Models.Receipt", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("MarketPlace.Models.Status", b =>
                 {
                     b.Navigation("Orders");
@@ -337,6 +387,8 @@ namespace MarketPlace.Migrations
             modelBuilder.Entity("MarketPlace.Models.User", b =>
                 {
                     b.Navigation("Baskets");
+
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

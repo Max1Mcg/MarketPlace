@@ -3,6 +3,7 @@ using System;
 using MarketPlace.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlace.Migrations
 {
     [DbContext(typeof(MarketPlaceContext))]
-    partial class MarketPlaceContextModelSnapshot : ModelSnapshot
+    [Migration("20230722114821_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,17 +147,12 @@ namespace MarketPlace.Migrations
                         .HasColumnName("sold")
                         .HasDefaultValueSql("false");
 
-                    b.Property<Guid>("Userid")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Weight")
                         .HasColumnType("text")
                         .HasColumnName("weight");
 
                     b.HasKey("Iditem")
                         .HasName("Item_pkey");
-
-                    b.HasIndex("Userid");
 
                     b.ToTable("Item", (string)null);
                 });
@@ -185,12 +183,12 @@ namespace MarketPlace.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("formed_at");
 
-                    b.Property<Guid?>("Receiptid")
-                        .HasColumnType("uuid");
-
                     b.Property<int>("Statusid")
                         .HasColumnType("integer")
                         .HasColumnName("statusid");
+
+                    b.Property<Guid?>("receiptIdreceipt")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Idorder")
                         .HasName("Order_pkey");
@@ -199,9 +197,9 @@ namespace MarketPlace.Migrations
 
                     b.HasIndex("Deliveryid");
 
-                    b.HasIndex("Receiptid");
-
                     b.HasIndex("Statusid");
+
+                    b.HasIndex("receiptIdreceipt");
 
                     b.ToTable("Order", (string)null);
                 });
@@ -319,15 +317,6 @@ namespace MarketPlace.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MarketPlace.Models.Item", b =>
-                {
-                    b.HasOne("MarketPlace.Models.User", null)
-                        .WithMany("Items")
-                        .HasForeignKey("Userid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MarketPlace.Models.Order", b =>
                 {
                     b.HasOne("MarketPlace.Models.Basket", "Basket")
@@ -342,15 +331,15 @@ namespace MarketPlace.Migrations
                         .IsRequired()
                         .HasConstraintName("Order_deliveryid_fkey");
 
-                    b.HasOne("MarketPlace.Models.Receipt", "receipt")
-                        .WithMany("Orders")
-                        .HasForeignKey("Receiptid");
-
                     b.HasOne("MarketPlace.Models.Status", "Status")
                         .WithMany("Orders")
                         .HasForeignKey("Statusid")
                         .IsRequired()
                         .HasConstraintName("Order_statusid_fkey");
+
+                    b.HasOne("MarketPlace.Models.Receipt", "receipt")
+                        .WithMany("Orders")
+                        .HasForeignKey("receiptIdreceipt");
 
                     b.Navigation("Basket");
 
@@ -384,8 +373,6 @@ namespace MarketPlace.Migrations
             modelBuilder.Entity("MarketPlace.Models.User", b =>
                 {
                     b.Navigation("Baskets");
-
-                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

@@ -43,11 +43,25 @@ namespace MarketPlace.Migrations
                     cost = table.Column<double>(type: "double precision", nullable: true),
                     description = table.Column<string>(type: "text", nullable: true),
                     weight = table.Column<string>(type: "text", nullable: true),
-                    sold = table.Column<bool>(type: "boolean", nullable: true, defaultValueSql: "false")
+                    sold = table.Column<bool>(type: "boolean", nullable: true, defaultValueSql: "false"),
+                    Available = table.Column<bool>(type: "boolean", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("Item_pkey", x => x.iditem);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Receipt",
+                columns: table => new
+                {
+                    Idreceipt = table.Column<Guid>(type: "uuid", nullable: false),
+                    Cost = table.Column<double>(type: "double precision", nullable: true),
+                    hasPayment = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Receipt", x => x.Idreceipt);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,7 +86,8 @@ namespace MarketPlace.Migrations
                     patronymic = table.Column<string>(type: "text", nullable: true),
                     age = table.Column<int>(type: "integer", nullable: true),
                     login = table.Column<string>(type: "text", nullable: true),
-                    password = table.Column<string>(type: "text", nullable: true)
+                    password = table.Column<string>(type: "text", nullable: true),
+                    Role = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -153,11 +168,17 @@ namespace MarketPlace.Migrations
                     deliveryid = table.Column<int>(type: "integer", nullable: false),
                     additional_information = table.Column<string>(type: "text", nullable: true),
                     formed_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    closed_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    closed_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    receiptIdreceipt = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("Order_pkey", x => x.idorder);
+                    table.ForeignKey(
+                        name: "FK_Order_Receipt_receiptIdreceipt",
+                        column: x => x.receiptIdreceipt,
+                        principalTable: "Receipt",
+                        principalColumn: "Idreceipt");
                     table.ForeignKey(
                         name: "Order_basketid_fkey",
                         column: x => x.basketid,
@@ -201,6 +222,11 @@ namespace MarketPlace.Migrations
                 column: "deliveryid");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Order_receiptIdreceipt",
+                table: "Order",
+                column: "receiptIdreceipt");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Order_statusid",
                 table: "Order",
                 column: "statusid");
@@ -223,6 +249,9 @@ namespace MarketPlace.Migrations
 
             migrationBuilder.DropTable(
                 name: "Item");
+
+            migrationBuilder.DropTable(
+                name: "Receipt");
 
             migrationBuilder.DropTable(
                 name: "Basket");
