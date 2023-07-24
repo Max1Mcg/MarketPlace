@@ -19,6 +19,6 @@ public partial class User
 
     public string? Password { get; set; }
     public string? Role { get; set; }
-
     public virtual ICollection<Basket> Baskets { get; set; } = new List<Basket>();
+    public virtual ICollection<Item> Items { get; set; } = new List<Item>();
 }

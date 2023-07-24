@@ -5,6 +5,7 @@ namespace MarketPlace.Models;
 
 public partial class Item
 {
+    public Guid Userid { get; set; }
     public Guid Iditem { get; set; }
 
     public double? Cost { get; set; }
@@ -14,6 +15,7 @@ public partial class Item
     public string? Weight { get; set; }
 
     public bool? Sold { get; set; }
+    public bool? Available{ get; set; }
 
     public virtual ICollection<Basket> Baskets { get; set; } = new List<Basket>();
 
