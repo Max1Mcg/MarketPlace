@@ -14,7 +14,7 @@ namespace MarketPlace.Controllers
         {
             _userService = userService;
         }
-        [HttpPost("/registration")]
+        [HttpPost("registration")]
         public async Task<IActionResult> Registration([FromBody]UserDTO userDTO)
         {
             try
@@ -26,7 +26,7 @@ namespace MarketPlace.Controllers
                 return BadRequest();
             }
         }
-        [HttpGet("/user")]
+        [HttpGet("{id}")]
         public ActionResult<UserDTO> User(Guid id)
         {
             try
@@ -38,13 +38,13 @@ namespace MarketPlace.Controllers
                 return BadRequest();
             }
         }
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateUser(Guid id, [FromBody] UserDTO orderDTO)
         {
             await _userService.UpdateUser(id, orderDTO);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(Guid id)
         {
             await _userService.DeleteUser(id);

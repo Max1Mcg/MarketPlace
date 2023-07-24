@@ -15,24 +15,24 @@ namespace MarketPlace.Controllers
         {
             _orderService= orderService;
         }
-        [HttpGet("order")]
+        [HttpGet("{id}")]
         public OrderDTO Get(Guid id)
         {
             return _orderService.GetOrder(id);
         }
 
-        [HttpPost("/order/create")]
+        [HttpPost("create")]
         public async Task<Guid> Post([FromBody] OrderDTO orderDTO)
         {
             return await _orderService.CreateOrder(orderDTO);
         }
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateOrder(Guid id, [FromBody] OrderDTO orderDTO)
         {
             await _orderService.UpdateOrder(id, orderDTO);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteOrder(Guid id)
         {
             await _orderService.DeleteOrder(id);
@@ -43,7 +43,7 @@ namespace MarketPlace.Controllers
         /// </summary>
         /// <param name="id">id заказа</param>
         /// <returns>Строка, имулирующая необходимость вернуть средства пользователю или её отсутствие</returns>
-        [HttpPatch("order/cancel")]
+        [HttpPatch("order/{id}/cancel")]
         public async Task<ActionResult<string>> CancelOrder(Guid id)
         {
             return Ok(await _orderService.CancelOrder(id));

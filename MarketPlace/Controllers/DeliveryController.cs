@@ -15,24 +15,24 @@ namespace MarketPlace.Controllers
         {
             _deliveryService = deliveryService;
         }
-        [HttpGet("/deliveries")]
+        [HttpGet]
         public IEnumerable<DeliveryDTO> Get()
         {
-            return _deliveryService.GetDeliveries();   
+            return _deliveryService.GetDeliveries();
         }
 
-        [HttpPost("delivery/create")]
+        [HttpPost("create")]
         public void Post([FromBody] DeliveryDTO deliveryDTO)
         {
             _deliveryService.CreateDelivery(deliveryDTO);
         }
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateDelivery(int id, [FromBody] DeliveryDTO deliveryDTO)
         {
             await _deliveryService.UpdateDelivery(id, deliveryDTO);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteDelivery(int id)
         {
             await _deliveryService.DeleteDelivery(id);

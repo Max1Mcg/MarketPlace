@@ -24,7 +24,7 @@ namespace MarketPlace.Controllers
         /// </summary>
         /// <param name="id">id корзины</param>
         /// <returns>дто корзины</returns>
-        [HttpGet("/basket")]
+        [HttpGet("{id}")]
         public BasketDTO Get(Guid id)
         {
             return _basketService.GetBasket(id);
@@ -34,7 +34,7 @@ namespace MarketPlace.Controllers
         /// </summary>
         /// <param name="basket">дто для добавления корзины</param>
         /// <returns>guid добавленной корзины</returns>
-        [HttpPost("/basket/create")]
+        [HttpPost("create")]
         public async Task<Guid> Post([FromBody] BasketDTO basket)
         {
             return await _basketService.CreateBasket(basket);
@@ -45,7 +45,7 @@ namespace MarketPlace.Controllers
         /// <param name="id">айди корзины</param>
         /// <param name="basketDTO">дто, которое показывает как корзина будет изменена</param>
         /// <returns></returns>
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateBasket(Guid id, [FromBody] BasketDTO basketDTO)
         {
             await _basketService.UpdateBasket(id, basketDTO);
@@ -56,7 +56,7 @@ namespace MarketPlace.Controllers
         /// </summary>
         /// <param name="id">id корзины</param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteBasket(Guid id)
         {
             await _basketService.DeleteBasket(id);
@@ -68,7 +68,7 @@ namespace MarketPlace.Controllers
         /// <param name="itemId">id предмета</param>
         /// <param name="id">id корзины</param>
         /// <returns></returns>
-        [HttpDelete("/basket/item")]
+        [HttpDelete("{id}/item/{itemId}")]
         public async Task<ActionResult> DeleteItemFromBasket([FromBody]Guid itemId, Guid id)
         {
             try
@@ -87,7 +87,7 @@ namespace MarketPlace.Controllers
         /// <param name="orderingBody">Параметры необходимые для формирования заказа</param>
         /// <param name="id">id корзины</param>
         /// <returns>id счёта на оплату</returns>
-        [HttpPost("/basket/ordering")]
+        [HttpPost("{id}/ordering")]
         public async Task<ActionResult<Guid>> BasketToOrder(OrderingBody orderingBody, Guid id)
         {
             try

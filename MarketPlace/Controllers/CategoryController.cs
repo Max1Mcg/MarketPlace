@@ -19,7 +19,7 @@ namespace MarketPlace.Controllers
         /// Получение всех категорий
         /// </summary>
         /// <returns>коллекция категорий</returns>
-        [HttpGet("/categories")]
+        [HttpGet]
         public IEnumerable<CategoryDTO> Categories()
         {
             return _categoryService.GetCategories();
@@ -29,8 +29,8 @@ namespace MarketPlace.Controllers
         /// </summary>
         /// <param name="categoryDTO">Информация для создания категории</param>
         /// <returns>id категории</returns>
-        [HttpPost("/create")]
-        public async Task<int> Create([FromBody]CategoryDTO categoryDTO)
+        [HttpPost("create")]
+        public async Task<int> Create([FromBody] CategoryDTO categoryDTO)
         {
             return await _categoryService.CreateCategory(categoryDTO);
         }
@@ -40,8 +40,8 @@ namespace MarketPlace.Controllers
         /// <param name="id">id категории</param>
         /// <param name="categoryDTO">Новая информация по категории</param>
         /// <returns></returns>
-        [HttpPatch]
-        public async Task<ActionResult> UpdateCategory(int id, [FromBody]CategoryDTO categoryDTO)
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> UpdateCategory(int id, [FromBody] CategoryDTO categoryDTO)
         {
             await _categoryService.UpdateCategory(id, categoryDTO);
             return Ok();
@@ -51,7 +51,7 @@ namespace MarketPlace.Controllers
         /// </summary>
         /// <param name="id">id категории</param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             await _categoryService.DeleteCategory(id);

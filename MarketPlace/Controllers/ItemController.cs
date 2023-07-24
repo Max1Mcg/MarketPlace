@@ -16,12 +16,12 @@ namespace MarketPlace.Controllers
         {
             _itemService = itemService;
         }
-        [HttpPost("/create_")]
+        [HttpPost("create")]
         public async Task<Guid> Create([FromBody] ItemDTO itemDTO)
         {
             return await _itemService.CreateItem(itemDTO);
         }
-        [HttpGet("/Item")]
+        [HttpGet("{id}")]
         public ActionResult<ItemDTO> Item(Guid id)
         {
             try
@@ -33,13 +33,13 @@ namespace MarketPlace.Controllers
                 return NotFound(e.Message);
             }
         }
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateItem(Guid id, [FromBody] ItemDTO itemDTO)
         {
             await _itemService.UpdateItem(id, itemDTO);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteItem(Guid id)
         {
             await _itemService.DeleteItem(id);

@@ -15,24 +15,24 @@ namespace MarketPlace.Controllers
         {
             _statusService = statusService;
         }
-        [HttpGet("/statuses")]
+        [HttpGet]
         public IEnumerable<StatusDTO> Get()
         {
             return _statusService.GetStatuses();
         }
 
-        [HttpPost("/status/create")]
+        [HttpPost("create")]
         public async Task<int> Post([FromBody]StatusDTO statusDTO)
         {
             return await _statusService.CreateStatus(statusDTO);
         }
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateStatus(int id, [FromBody] StatusDTO statusDTO)
         {
             await _statusService.UpdateStatus(id, statusDTO);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteStatus(int id)
         {
             await _statusService.DeleteStatus(id);

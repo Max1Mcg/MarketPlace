@@ -20,7 +20,7 @@ namespace MarketPlace.Controllers
         /// </summary>
         /// <param name="id">id квитации на оплату</param>
         /// <returns></returns>
-        [HttpPatch("hasPayment")]
+        [HttpPatch("{id}/hasPayment")]
         public async Task<ActionResult> Payment(Guid id)
         {
             try
